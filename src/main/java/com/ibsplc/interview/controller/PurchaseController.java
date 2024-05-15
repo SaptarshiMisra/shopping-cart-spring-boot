@@ -3,14 +3,12 @@ package com.ibsplc.interview.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ibsplc.interview.model.Product;
 import com.ibsplc.interview.service.ProductService;
 
-@RestController(value="/product")
+@RestController @RequestMapping(value="/product")
 public class PurchaseController {
 	
 	@Autowired
@@ -22,13 +20,13 @@ public class PurchaseController {
 	}
 	
 	@PostMapping(value="/add")
-	public boolean addNewProduct(Product product){
+	public boolean addNewProduct( @RequestBody Product product){
 		if(null == product.getId() || product.getId().isEmpty()) return false ; 
 		return productService.addNewProduct(product) != null;
 	}
 	
-	@PostMapping(value="/purchase")
-	public boolean buyProduct(Product product, int quantity) {
+	@PostMapping(value="/purchase/{quantity}")
+	public boolean buyProduct(@RequestBody Product product, @PathVariable Integer quantity) {
 		return productService.purchaseProduct(product, quantity);
 	}
 

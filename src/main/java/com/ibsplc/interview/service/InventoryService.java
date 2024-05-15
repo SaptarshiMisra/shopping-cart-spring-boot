@@ -13,10 +13,10 @@ public class InventoryService {
 	private Map<String, Integer> inventory = new HashMap<>();
 	
 	public boolean updateInventory(String productId, int quantity) {
-		int productCount =  inventory.get(productId);
-		
 		if(null == productId || productId.isEmpty()) return false;
-		
+
+		Integer productCount =  inventory.get(productId);
+		if(null == productCount ) productCount =0;
 		inventory.put(productId, productCount+quantity);
 		
 		return true;
